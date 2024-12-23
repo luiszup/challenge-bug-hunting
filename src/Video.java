@@ -2,11 +2,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Video {
-    public String titulo;
-    public String descricao;
-    public int duracao; // em minutos
-    public String categoria;
-    public Date dataPublicacao;
+    private String titulo;
+    private String descricao;
+    private int duracao; // em minutos
+    private String categoria;
+    private Date dataPublicacao;
 
     public Video(String titulo, String descricao, int duracao, String categoria, Date dataPublicacao) {
         this.titulo = titulo;
@@ -30,5 +30,45 @@ public class Video {
         } catch (Exception e) {
             return null; // Ignora erros de parsing
         }
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public int getDuracao() {
+        return duracao;
+    }
+
+    public Date getDataPublicacao() {
+        return dataPublicacao;
+    }
+
+    public void setTitulo(String video) {
+        this.titulo = titulo;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
+    }
+
+    public void setDataPublicacao(Date dataPublicacao) {
+        this.dataPublicacao = dataPublicacao;
     }
 }

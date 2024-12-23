@@ -18,26 +18,6 @@ public class Video {
         this.dataPublicacao = dataPublicacao;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public int getDuracao() {
-        return duracao;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public Date getDataPublicacao() {
-        return dataPublicacao;
-    }
-
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -52,5 +32,44 @@ public class Video {
         } catch (Exception e) {
             return null; // Ignora erros de parsing
         }
+    }
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public int getDuracao() {
+        return duracao;
+    }
+
+    public Date getDataPublicacao() {
+        return dataPublicacao;
+    }
+
+    public void setTitulo(String video) {
+        this.titulo = titulo;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
+    }
+
+    public void setDataPublicacao(Date dataPublicacao) {
+        this.dataPublicacao = dataPublicacao;
     }
 }
