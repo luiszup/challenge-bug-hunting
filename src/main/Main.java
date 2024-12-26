@@ -62,6 +62,7 @@ public class Main {
                         System.out.println("Categoria: " + video.getCategoria());
                         System.out.println("Duração: " + video.getDuracao());
                         System.out.println("Data da publicação: " + video.getDataPublicacao());
+                        System.out.println();
                     }
                     break;
 
@@ -75,6 +76,7 @@ public class Main {
                         System.out.println("Categoria: " + video.getCategoria());
                         System.out.println("Duração: " + video.getDuracao());
                         System.out.println("Data da publicação: " + video.getDataPublicacao());
+                        System.out.println();
                     }
                     break;
 
