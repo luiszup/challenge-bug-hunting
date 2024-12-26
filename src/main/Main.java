@@ -134,13 +134,20 @@ public class Main {
                     System.out.print("Digite o título para busca: ");
                     String query = scanner.nextLine();
                     List<Video> resultados = searchStrategy.search(videoService.listVideos(), query);
-                    for (Video video : resultados) {
-                        System.out.println("Título: " + video.getTitulo());
-                        System.out.println("Descrição: " + video.getDescricao());
-                        System.out.println("Categoria: " + video.getCategoria());
-                        System.out.println("Duração: " + video.getDuracao());
-                        System.out.println("Data da publicação: " + video.getDataPublicacao());
-                        System.out.println();
+                    
+                    if (query == null || query.trim().isEmpty()) {
+                        System.out.println("A busca não pode estar vazia! Por favor, digite um título.");
+                    } else if (resultados.isEmpty()) {
+                        System.out.println("Nenhum vídeo com este título foi encontrado");
+                    } else {
+                        for (Video video : resultados) {
+                            System.out.println("Título: " + video.getTitulo());
+                            System.out.println("Descrição: " + video.getDescricao());
+                            System.out.println("Categoria: " + video.getCategoria());
+                            System.out.println("Duração: " + video.getDuracao());
+                            System.out.println("Data da publicação: " + video.getDataPublicacao());
+                            System.out.println();
+                        }
                     }
                     break;
 
