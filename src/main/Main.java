@@ -80,11 +80,13 @@ public class Main {
                     String categoria;
                     while (true) {
                         try {
-                            System.out.print("Digite a categoria do vídeo: ");
+                            System.out.print("Digite a categoria do vídeo (Filme, Série, Documentário): ");
                             categoria = scanner.nextLine();
 
                             if (categoria== null || categoria.trim().isEmpty()) {
                                 throw new IllegalArgumentException("A categoria está vazia. Por favor, digite uma categoria válida");
+                            } else if (!Video.categoriaValida(categoria.toLowerCase())) {
+                                throw new IllegalArgumentException("A categoria é inválida! As categorias válidas são Filme, Série e Documentário");
                             }
 
                             break;
