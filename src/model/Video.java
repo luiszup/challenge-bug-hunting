@@ -1,9 +1,7 @@
 package model;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class Video {
     private String titulo;
@@ -12,22 +10,12 @@ public class Video {
     private String categoria;
     private Date dataPublicacao;
 
-    private static List<String> categoriasValidas = Arrays.asList("Filme", "Série", "Documentário");
-
     public Video(String titulo, String descricao, int duracao, String categoria, Date dataPublicacao) {
-        if (!categoriaValida(categoria)) {
-            throw new IllegalArgumentException("Categoria inválida! As categorias válidas são " + categoriasValidas);
-        }
         this.titulo = titulo;
         this.descricao = descricao;
         this.duracao = duracao;
         this.categoria = categoria;
         this.dataPublicacao = dataPublicacao;
-    }
-
-    public static boolean categoriaValida(String categoria) {
-        List<String> categoriasValidas = Arrays.asList("filme", "série", "documentário");
-        return categoriasValidas.contains(categoria.toLowerCase());
     }
 
     @Override
@@ -74,9 +62,6 @@ public class Video {
     }
 
     public void setCategoria(String categoria) {
-        if (!categoriaValida(categoria)) {
-            throw new IllegalArgumentException("Categoria inválida! As categorias válidas são " + categoriasValidas);
-        }
         this.categoria = categoria;
     }
 

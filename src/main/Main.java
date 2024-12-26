@@ -6,6 +6,7 @@ import service.VideoService;
 import service.VideoServiceImpl;
 import strategy.SearchStrategy;
 import strategy.TitleSearchStrategy;
+import service.VideoManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
         SearchStrategy searchStrategy = new TitleSearchStrategy();
+        VideoManager videoManager = new VideoManager();
         int opcao;
 
         do {
@@ -27,115 +29,55 @@ public class Main {
             System.out.println("4. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    String titulo;
-                    while (true) {
-                        try {
-                            System.out.print("Digite o título do vídeo: ");
-                            titulo = scanner.nextLine();
-
-                            if (titulo == null || titulo.trim().isEmpty()) {
-                                throw new IllegalArgumentException("O título está vazio. Por favor, digite um título válido");
-                            }
-
-                            break;
-                        } catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-
-                    String descricao;
-                    while (true) {
-                        try {
-                            System.out.print("Digite a descrição do vídeo: ");
-                            descricao = scanner.nextLine();
-
-                            if (descricao == null || descricao.trim().isEmpty()) {
-                                throw new IllegalArgumentException("A descrição está vazia. Por favor, digite uma descrição válida");
-                            }
-
-                            break;
-                        } catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-
-                    int duracao = -1;
-                    while (duracao < 0) {
-                        try {
-                            System.out.print("Digite a duração do vídeo (em minutos): ");
-                            String input = scanner.nextLine();
-                            duracao = Integer.parseInt(input);
-                            if (duracao < 0) {
-                                System.out.println("Tempo de duração inválido! Por favor, digite um número inteiro");
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("Valor inválido! Por favor, digite um número inteiro");
-                        }
-                    }
-
-                    String categoria;
-                    while (true) {
-                        try {
-                            System.out.print("Digite a categoria do vídeo (Filme, Série, Documentário): ");
-                            categoria = scanner.nextLine();
-
-                            if (categoria== null || categoria.trim().isEmpty()) {
-                                throw new IllegalArgumentException("A categoria está vazia. Por favor, digite uma categoria válida");
-                            } else if (!Video.categoriaValida(categoria.toLowerCase())) {
-                                throw new IllegalArgumentException("A categoria é inválida! As categorias válidas são Filme, Série e Documentário");
-                            }
-
-                            break;
-                        } catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-
-
-                    System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
-                    Date dataPublicacao = null;
-
-                    while (dataPublicacao == null) {
-                        try {
-                            String dataStr = scanner.nextLine();
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                            sdf.setLenient(false);
-                            dataPublicacao = sdf.parse(dataStr);
-                        } catch (java.text.ParseException e) {
-                            System.out.println("Formato de data inválido! Utilize o formato dd/mm/yyyy.");
-                        }
-                    }
-
                     try {
-                        Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
-                        videoService.addVideo(video);
+                        System.out.print("Digite o título do vídeo: ");
+                        String titulo = scanner.nextLine();
+
+                        System.out.print("Digite a descrição do vídeo: ");
+                        String descricao = scanner.nextLine();
+
+                        System.out.print("Digite a duração do vídeo (em minutos): ");
+                        int duracao = scanner.nextInt();
+                        scanner.nextLine();
+
+                        System.out.print("Digite a categoria do vídeo (Filme, Série, Documentário): ");
+                        String categoria = scanner.nextLine();
+
+                        System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
+                        String dataStr = scanner.nextLine();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        Date dataPublicacao = sdf.parse(dataStr);
+
+                        videoManager.addVideo(titulo, descricao, duracao, categoria, dataPublicacao);
                         System.out.println("Vídeo adicionado com sucesso!");
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Erro ao adicionar vídeo");
+                    } catch (Exception e) {
+                        System.out.println("Erro: " + e.getMessage());
                     }
-
                     break;
-
                 case 2:
-                    List<Video> videos = videoService.listVideos();
-                    for (Video video : videos) {
-                        System.out.println("Título: " + video.getTitulo());
-                        System.out.println("Descrição: " + video.getDescricao());
-                        System.out.println("Categoria: " + video.getCategoria());
-                        System.out.println("Duração: " + video.getDuracao());
-                        System.out.println("Data da publicação: " + video.getDataPublicacao());
-                        System.out.println();
+                    List<Video> videos = videoManager.listVideos();
+                    if (videos.isEmpty()) {
+                        System.out.println("Nenhum vídeo encontrado");
+                    } else {
+                        for (Video video: videos) {
+                            System.out.println("Título: " + video.getTitulo());
+                            System.out.println("Descrição: " + video.getDescricao());
+                            System.out.println("Categoria: " + video.getCategoria());
+                            System.out.println("Duração: " + video.getDuracao());
+                            System.out.println("Data da publicação: " + video.getDataPublicacao());
+                            System.out.println();
+                        }
                     }
                     break;
 
                 case 3:
                     System.out.print("Digite o título para busca: ");
                     String query = scanner.nextLine();
-                    List<Video> resultados = searchStrategy.search(videoService.listVideos(), query);
+                    List<Video> resultados = videoManager.searchByTitle(query);
                     
                     if (query == null || query.trim().isEmpty()) {
                         System.out.println("A busca não pode estar vazia! Por favor, digite um título.");
