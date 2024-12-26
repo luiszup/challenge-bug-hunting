@@ -31,10 +31,38 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    System.out.print("Digite o título do vídeo: ");
-                    String titulo = scanner.nextLine();
-                    System.out.print("Digite a descrição do vídeo: ");
-                    String descricao = scanner.nextLine();
+                    String titulo;
+                    while (true) {
+                        try {
+                            System.out.print("Digite o título do vídeo: ");
+                            titulo = scanner.nextLine();
+
+                            if (titulo == null || titulo.trim().isEmpty()) {
+                                throw new IllegalArgumentException("O título está vazio. Por favor, digite um título válido");
+                            }
+
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                    String descricao;
+                    while (true) {
+                        try {
+                            System.out.print("Digite a descrição do vídeo: ");
+                            descricao = scanner.nextLine();
+
+                            if (descricao == null || descricao.trim().isEmpty()) {
+                                throw new IllegalArgumentException("A descrição está vazia. Por favor, digite uma descrição válida");
+                            }
+
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
                     int duracao = -1;
                     while (duracao < 0) {
                         try {
