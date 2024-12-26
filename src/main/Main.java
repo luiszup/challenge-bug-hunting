@@ -57,7 +57,11 @@ public class Main {
                 case 2:
                     List<Video> videos = videoService.listVideos();
                     for (Video video : videos) {
-                        System.out.println(video);
+                        System.out.println("Título: " + video.getTitulo());
+                        System.out.println("Descrição: " + video.getDescricao());
+                        System.out.println("Categoria: " + video.getCategoria());
+                        System.out.println("Duração: " + video.getDuracao());
+                        System.out.println("Data da publicação: " + video.getDataPublicacao());
                     }
                     break;
 
@@ -66,7 +70,11 @@ public class Main {
                     String query = scanner.nextLine();
                     List<Video> resultados = searchStrategy.search(videoService.listVideos(), query);
                     for (Video video : resultados) {
-                        System.out.println(video);
+                        System.out.println("Título: " + video.getTitulo());
+                        System.out.println("Descrição: " + video.getDescricao());
+                        System.out.println("Categoria: " + video.getCategoria());
+                        System.out.println("Duração: " + video.getDuracao());
+                        System.out.println("Data da publicação: " + video.getDataPublicacao());
                     }
                     break;
 
