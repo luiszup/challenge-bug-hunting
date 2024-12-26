@@ -41,8 +41,14 @@ public class Main {
                         String descricao = scanner.nextLine();
 
                         System.out.print("Digite a duração do vídeo (em minutos): ");
-                        int duracao = scanner.nextInt();
-                        scanner.nextLine();
+                        String duracaoStr = scanner.nextLine();
+
+                        if (!videoManager.isDuracaoValida(duracaoStr)) {
+                            System.out.println("Duração inválida! A duração deve ser um número inteiro positivo:");
+                            break;
+                        }
+
+                        int duracao = Integer.parseInt(duracaoStr);
 
                         System.out.print("Digite a categoria do vídeo (Filme, Série, Documentário): ");
                         String categoria = scanner.nextLine();
