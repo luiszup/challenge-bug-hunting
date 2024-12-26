@@ -86,6 +86,7 @@ public class Main {
 
                 default:
                     System.out.println("Opção inválida.");
+                    break;
             }
         } while (opcao != 4);
 
