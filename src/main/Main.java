@@ -52,7 +52,8 @@ public class Main {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                         Date dataPublicacao = sdf.parse(dataStr);
 
-                        videoManager.addVideo(titulo, descricao, duracao, categoria, dataPublicacao);
+                        Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
+                        videoService.addVideo(video);
                         System.out.println("Vídeo adicionado com sucesso!");
                     } catch (Exception e) {
                         System.out.println("Erro: " + e.getMessage());
