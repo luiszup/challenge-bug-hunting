@@ -35,8 +35,20 @@ public class Main {
                     String titulo = scanner.nextLine();
                     System.out.print("Digite a descrição do vídeo: ");
                     String descricao = scanner.nextLine();
-                    System.out.print("Digite a duração do vídeo (em minutos): ");
-                    int duracao = scanner.nextInt();
+                    int duracao = -1;
+                    while (duracao < 0) {
+                        try {
+                            System.out.print("Digite a duração do vídeo (em minutos): ");
+                            String input = scanner.nextLine();
+                            duracao = Integer.parseInt(input);
+                            if (duracao < 0) {
+                                System.out.println("Tempo de duração inválido! Por favor, digite um número inteiro");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Valor inválido! Por favor, digite um número inteiro");
+                        }
+                    }
+
                     scanner.nextLine(); // Consumir a quebra de linha
                     System.out.print("Digite a categoria do vídeo: ");
                     String categoria = scanner.nextLine();
