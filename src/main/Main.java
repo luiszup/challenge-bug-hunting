@@ -95,17 +95,27 @@ public class Main {
 
 
                     System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
-                    String dataStr = scanner.nextLine();
+                    Date dataPublicacao = null;
+
+                    while (dataPublicacao == null) {
+                        try {
+                            String dataStr = scanner.nextLine();
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            sdf.setLenient(false);
+                            dataPublicacao = sdf.parse(dataStr);
+                        } catch (java.text.ParseException e) {
+                            System.out.println("Formato de data inválido! Utilize o formato dd/mm/yyyy.");
+                        }
+                    }
 
                     try {
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        Date dataPublicacao = sdf.parse(dataStr);
                         Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
                         videoService.addVideo(video);
                         System.out.println("Vídeo adicionado com sucesso!");
-                    } catch (Exception e) {
-                        System.out.println("Erro ao adicionar vídeo.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Erro ao adicionar vídeo");
                     }
+
                     break;
 
                 case 2:
