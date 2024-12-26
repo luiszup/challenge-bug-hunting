@@ -77,9 +77,23 @@ public class Main {
                         }
                     }
 
-                    scanner.nextLine(); // Consumir a quebra de linha
-                    System.out.print("Digite a categoria do vídeo: ");
-                    String categoria = scanner.nextLine();
+                    String categoria;
+                    while (true) {
+                        try {
+                            System.out.print("Digite a categoria do vídeo: ");
+                            categoria = scanner.nextLine();
+
+                            if (categoria== null || categoria.trim().isEmpty()) {
+                                throw new IllegalArgumentException("A categoria está vazia. Por favor, digite uma categoria válida");
+                            }
+
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+
                     System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
                     String dataStr = scanner.nextLine();
 
