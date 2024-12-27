@@ -33,7 +33,7 @@ public class VideoManager {
         if (!isCategoriaValida(categoria)) {
             throw new IllegalArgumentException("Categoria inválida! As categorias válidas são: " + CATEGORIAS_VALIDAS);
         }
-        if (duracao > 0) {
+        if (duracao < 0) {
             throw new IllegalArgumentException("Duração inválida! Digite um número inteiro positivo:");
         }
         Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
@@ -52,5 +52,27 @@ public class VideoManager {
             }
         }
         return resultados;
+    }
+
+    public void editVideo(String titulo, String novoTitulo, String novaDescricao, int novaDuracao, String novaCategoria, Date novaDataPublicacao) {
+        for (Video video : videos) {
+            if (video.getTitulo().equalsIgnoreCase(titulo)) {
+                if (!isCategoriaValida(novaCategoria)) {
+                    throw new IllegalArgumentException("Categoria inválida! As categorias válidas são " + CATEGORIAS_VALIDAS);
+                }
+            }
+
+            if (novaDuracao < 0) {
+                throw new IllegalArgumentException("Duração inválida! Digite um número inteiro positivo.");
+            }
+
+            video.setTitulo(novoTitulo);
+            video.setDescricao(novaDescricao);
+            video.setDuracao(novaDuracao);
+            video.setCategoria(novaCategoria);
+            video.setDataPublicacao(novaDataPublicacao);
+            return;
+        }
+        throw new IllegalArgumentException("Vídeo com o título " + titulo + " não encontrado!");
     }
 }
