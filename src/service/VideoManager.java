@@ -2,11 +2,8 @@ package service;
 
 import model.Video;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.text.Normalizer;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class VideoManager {
     private static final List<String> CATEGORIAS_VALIDAS = Arrays.asList("Filme", "Série", "Documentário");
@@ -99,5 +96,11 @@ public class VideoManager {
             }
         }
         return resultados;
+    }
+
+    public List<Video> ordenarVideoPorData() {
+        return videos.stream()
+                .sorted(Comparator.comparing(Video::getDataPublicacao))
+                .collect(Collectors.toList());
     }
 }

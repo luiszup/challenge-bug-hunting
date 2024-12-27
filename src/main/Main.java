@@ -29,7 +29,8 @@ public class Main {
             System.out.println("4. Editar vídeo");
             System.out.println("5. Excluir vídeo");
             System.out.println("6. Filtrar vídeos por categoria");
-            System.out.println("7. Sair");
+            System.out.println("7. Listar vídeos por ordem de publicação");
+            System.out.println("8. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -172,6 +173,22 @@ public class Main {
                     break;
 
                 case 7:
+                    List<Video> videosOrdenados = videoManager.ordenarVideoPorData();
+                    if (videosOrdenados.isEmpty()) {
+                        System.out.println("Nenhum vídeo encontrado");
+                    } else {
+                        for (Video video : videosOrdenados) {
+                            System.out.println("Título: " + video.getTitulo());
+                            System.out.println("Descrição: " + video.getDescricao());
+                            System.out.println("Categoria: " + video.getCategoria());
+                            System.out.println("Duração: " + video.getDuracao());
+                            System.out.println("Data da publicação: " + video.getDataPublicacao());
+                            System.out.println();
+                        }
+                    }
+                    break;
+
+                case 8:
                     System.out.println("Saindo do sistema...");
                     break;
 
@@ -179,7 +196,7 @@ public class Main {
                     System.out.println("Opção inválida.");
                     break;
             }
-        } while (opcao != 7);
+        } while (opcao != 8);
 
         scanner.close();
     }
