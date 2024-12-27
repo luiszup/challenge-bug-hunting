@@ -28,7 +28,8 @@ public class Main {
             System.out.println("3. Pesquisar vídeo por título");
             System.out.println("4. Editar vídeo");
             System.out.println("5. Excluir vídeo");
-            System.out.println("6. Sair");
+            System.out.println("6. Filtrar vídeos por categoria");
+            System.out.println("7. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -149,6 +150,28 @@ public class Main {
                     break;
 
                 case 6:
+                    System.out.println("Digite a categoria para filtrar (Filme, Série, Documentário):");
+                    String categoriaFiltro = scanner.nextLine();
+                    try {
+                        List<Video> videosFiltrados = videoManager.filtroPorCategoria(categoriaFiltro);
+                        if (videosFiltrados.isEmpty()) {
+                            System.out.println("Nenhum vídeo encontrado na categoria " + categoriaFiltro);
+                        } else {
+                            for (Video video : videosFiltrados) {
+                                System.out.println("Título: " + video.getTitulo());
+                                System.out.println("Descrição: " + video.getDescricao());
+                                System.out.println("Categoria: " + video.getCategoria());
+                                System.out.println("Duração: " + video.getDuracao());
+                                System.out.println("Data da publicação: " + video.getDataPublicacao());
+                                System.out.println();
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
+                    break;
+
+                case 7:
                     System.out.println("Saindo do sistema...");
                     break;
 
@@ -156,7 +179,7 @@ public class Main {
                     System.out.println("Opção inválida.");
                     break;
             }
-        } while (opcao != 6);
+        } while (opcao != 7);
 
         scanner.close();
     }

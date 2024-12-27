@@ -86,4 +86,18 @@ public class VideoManager {
         }
         throw new IllegalArgumentException("Vídeo com título " + titulo + " não foi encontrado!");
     }
+
+    public List<Video> filtroPorCategoria(String categoria) {
+        if (!isCategoriaValida(categoria)) {
+            throw new IllegalArgumentException("Categoria inválida! As categorias válidas são " + CATEGORIAS_VALIDAS);
+        }
+
+        List<Video> resultados = new ArrayList<>();
+        for (Video video : videos) {
+            if (video.getCategoria().equalsIgnoreCase(categoria)) {
+                resultados.add(video);
+            }
+        }
+        return resultados;
+    }
 }
