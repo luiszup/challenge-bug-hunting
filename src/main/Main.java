@@ -1,14 +1,12 @@
 package main;
 
 import model.Video;
+import repository.FileHandler;
 import repository.FileVideoRepository;
 import service.VideoService;
 import service.VideoServiceImpl;
-import strategy.SearchStrategy;
-import strategy.TitleSearchStrategy;
 import service.VideoManager;
 
-import javax.sound.midi.Soundbank;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +16,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
-        SearchStrategy searchStrategy = new TitleSearchStrategy();
+        FileHandler fileHandler = new FileHandler("videos.txt");
+        fileHandler.createFileIfNotExists();
+        FileVideoRepository videoRepository = new FileVideoRepository("videos.txt");
+        VideoService videoService = new VideoServiceImpl(videoRepository);
         VideoManager videoManager = new VideoManager();
         int opcao;
 
