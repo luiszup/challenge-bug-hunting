@@ -75,4 +75,15 @@ public class VideoManager {
         }
         throw new IllegalArgumentException("Vídeo com o título " + titulo + " não encontrado!");
     }
+
+    public void deleteVideo(String titulo) {
+        for (Video video : videos) {
+            if (video.getTitulo().equalsIgnoreCase(titulo)) {
+                videos.remove(video);
+                System.out.println("O vídeo " + titulo + " foi removido com sucesso!");
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Vídeo com título " + titulo + " não foi encontrado!");
+    }
 }

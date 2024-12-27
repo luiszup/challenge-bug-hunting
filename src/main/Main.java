@@ -27,7 +27,8 @@ public class Main {
             System.out.println("2. Listar vídeos");
             System.out.println("3. Pesquisar vídeo por título");
             System.out.println("4. Editar vídeo");
-            System.out.println("5. Sair");
+            System.out.println("5. Excluir vídeo");
+            System.out.println("6. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -87,7 +88,7 @@ public class Main {
                     System.out.print("Digite o título para busca: ");
                     String query = scanner.nextLine();
                     List<Video> resultados = videoManager.searchByTitle(query);
-                    
+
                     if (query == null || query.trim().isEmpty()) {
                         System.out.println("A busca não pode estar vazia! Por favor, digite um título.");
                     } else if (resultados.isEmpty()) {
@@ -137,6 +138,17 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("Digite o título que deseja excluir:");
+                    String tituloExcluir = scanner.nextLine();
+                    try {
+                        videoManager.deleteVideo(tituloExcluir);
+                        System.out.println("O vídeo foi excluído com sucesso!");
+                    } catch (Exception e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
+                    break;
+
+                case 6:
                     System.out.println("Saindo do sistema...");
                     break;
 
@@ -144,7 +156,7 @@ public class Main {
                     System.out.println("Opção inválida.");
                     break;
             }
-        } while (opcao != 5);
+        } while (opcao != 6);
 
         scanner.close();
     }
