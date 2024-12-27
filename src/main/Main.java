@@ -8,9 +8,11 @@ import strategy.SearchStrategy;
 import strategy.TitleSearchStrategy;
 import service.VideoManager;
 
+import javax.sound.midi.Soundbank;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -30,7 +32,8 @@ public class Main {
             System.out.println("5. Excluir vídeo");
             System.out.println("6. Filtrar vídeos por categoria");
             System.out.println("7. Listar vídeos por ordem de publicação");
-            System.out.println("8. Sair");
+            System.out.println("8. Gerar relatório de estatísticas");
+            System.out.println("9. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -189,6 +192,18 @@ public class Main {
                     break;
 
                 case 8:
+                    System.out.println("\n=== Relatório de Estatísticas ===");
+                    Map<String, Object> relatorio = videoManager.gerarRelatorioEstatisticas();
+                    System.out.println("Número total de vídeos: " + relatorio.get("totalVideos"));
+                    System.out.println("Duração total dos vídeos: " + relatorio.get("totalDuracao") + " minutos");
+                    System.out.println("Número de vídeos por categoria: ");
+                    Map<String, Integer> videosPorCategoria = (Map<String, Integer>) relatorio.get("videosPorCategoria");
+                    for (Map.Entry<String, Integer> entry : videosPorCategoria.entrySet()) {
+                        System.out.println("- " + entry.getKey() + ": " + entry.getValue());
+                    }
+                    break;
+
+                case 9:
                     System.out.println("Saindo do sistema...");
                     break;
 
@@ -196,7 +211,7 @@ public class Main {
                     System.out.println("Opção inválida.");
                     break;
             }
-        } while (opcao != 8);
+        } while (opcao != 9);
 
         scanner.close();
     }

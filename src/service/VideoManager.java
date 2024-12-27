@@ -103,4 +103,21 @@ public class VideoManager {
                 .sorted(Comparator.comparing(Video::getDataPublicacao))
                 .collect(Collectors.toList());
     }
+
+    public Map<String, Object> gerarRelatorioEstatisticas() {
+        Map<String, Object> relatorio = new HashMap<>();
+        int totalVideos = videos.size();
+        relatorio.put("totalVideos", totalVideos);
+        int totalDuracao = videos.stream().mapToInt(Video::getDuracao).sum();
+        relatorio.put("totalDuracao", totalDuracao);
+        Map<String, Integer> videosPorCategoria = new HashMap<>();
+        for (String categoria : CATEGORIAS_VALIDAS) {
+            int contador = (int) videos.stream()
+                    .filter(video -> video.getCategoria().equalsIgnoreCase(categoria))
+                    .count();
+            videosPorCategoria.put(categoria, contador);
+        }
+        relatorio.put("videosPorCategoria", videosPorCategoria);
+        return relatorio;
+    }
 }
