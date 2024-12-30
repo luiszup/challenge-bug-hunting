@@ -7,35 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileVideoRepository implements VideoRepository {
-    private final File file;
+    private FileHandler fileHandler;
 
     public FileVideoRepository(String filePath) {
-        this.file = new File(filePath);
+        this.fileHandler = new FileHandler(filePath);
+        this.fileHandler.createFileIfNotExists();
     }
 
     @Override
     public void save(Video video) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
-            bw.write(video.toString());
-            bw.newLine();
-        } catch (IOException e) {
-            // Ignorar erros por enquanto
-        }
+        fileHandler.writeLine(video.toString(), true);
     }
 
     @Override
     public List<Video> findAll() {
         List<Video> videos = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                Video video = Video.fromString(line);
-                if (video != null) {
-                    videos.add(video);
-                }
+        List<String> lines = fileHandler.readAllLines();
+        for (String line : lines) {
+            Video video = Video.fromString(line);
+            if (video != null) {
+                videos.add(video);
             }
-        } catch (IOException e) {
-            // Ignorar erros por enquanto
         }
         return videos;
     }
